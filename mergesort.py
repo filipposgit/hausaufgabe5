@@ -1,51 +1,48 @@
-def ASSIGNMENT(new_list, i, old_list, j):
-    new_list[i] = old_list[j]
+def merge_sort(numbers):
+    """
+    Sortiert eine Liste von Zahlen mit dem Merge-Sort-Algorithmus.
+
+    Der Algorithmus teilt die Liste rekursiv in kleinere Listen auf,
+    sortiert diese und fügt sie anschließend wieder geordnet zusammen.
+    """
+    if len(numbers) <= 1:
+        return numbers
+
+    middle_index = len(numbers) // 2
+    left_half = numbers[:middle_index]
+    right_half = numbers[middle_index:]
+
+    sorted_left_half = merge_sort(left_half)
+    sorted_right_half = merge_sort(right_half)
+
+    return merge(sorted_left_half, sorted_right_half)
 
 
-def mergeSort(list_to_sort_by_merge):
-    if (
-        len(list_to_sort_by_merge) > 1
-        and not len(list_to_sort_by_merge) < 1
-        and len(list_to_sort_by_merge) != 0
-    ):
-        mid = len(list_to_sort_by_merge) // 2
-        left = list_to_sort_by_merge[:mid]
-        right = list_to_sort_by_merge[mid:]
+def merge(left_half, right_half):
+    """
+    Fügt zwei bereits sortierte Listen zu einer sortierten Liste zusammen.
+    """
+    sorted_numbers = []
+    left_index = 0
+    right_index = 0
 
-        mergeSort(left)
-        mergeSort(right)
+    while left_index < len(left_half) and right_index < len(right_half):
+        if left_half[left_index] <= right_half[right_index]:
+            sorted_numbers.append(left_half[left_index])
+            left_index += 1
+        else:
+            sorted_numbers.append(right_half[right_index])
+            right_index += 1
 
-        l = 0
-        r = 0
-        i = 0
+    sorted_numbers.extend(left_half[left_index:])
+    sorted_numbers.extend(right_half[right_index:])
 
-        while l < len(left) and r < len(right):
-            if left[l] <= right[r]:
-                ASSIGNMENT(new_list=list_to_sort_by_merge, i=i, old_list=left, j=l)
-                l += 1
-            else:
-                ASSIGNMENT(new_list=list_to_sort_by_merge, i=i, old_list=right, j=r)
-                r += 1
-            i += 1
-
-        while l < len(left):
-            list_to_sort_by_merge[i] = left[l]
-            l += 1
-            i += 1
-
-        while r < len(right):
-            list_to_sort_by_merge[i] = right[r]
-            r += 1
-            i += 1
+    return sorted_numbers
 
 
-import matplotlib.pyplot as plt
+if __name__ == "__main__":
+    example_numbers = [5, 3, 8, 4, 2, 7, 1, 6]
+    sorted_numbers = merge_sort(example_numbers)
 
-my_list = [54, 26, 93, 17, 77, 31, 44, 55, 20]
-x = range(len(my_list))
-plt.plot(x, my_list)
-plt.show()
-mergeSort(my_list)
-x = range(len(my_list))
-plt.plot(x, my_list)
-plt.show()
+    print("Unsorted list:", example_numbers)
+    print("Sorted list:", sorted_numbers)
