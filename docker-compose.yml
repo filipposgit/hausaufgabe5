@@ -1,0 +1,12 @@
+services:
+  tests:
+    build: .
+    volumes:
+      - .:/app
+    command: pytest
+
+  run-method:
+    build: .
+    volumes:
+      - .:/app
+    command: python3 run_single_number.py

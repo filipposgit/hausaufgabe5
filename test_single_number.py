@@ -60,4 +60,15 @@ def test_no_single_number_raises_value_error():
 
 def test_more_than_one_single_number_raises_value_error():
     with pytest.raises(ValueError):
-        find_single_number([1, 2, 3, 1, 2])
+        find_single_number([1, 2, 3, 1, 2, 4])
+
+def test_required_libraries_are_installed():
+    import numpy
+    import pandas
+    import matplotlib
+    import seaborn
+
+    assert numpy is not None
+    assert pandas is not None
+    assert matplotlib is not None
+    assert seaborn is not None
